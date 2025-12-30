@@ -137,12 +137,12 @@ def start_ai_session():
         system_prompt = f.read()
 
     # 在容器中启动Claude Code
-    # 使用非交互模式，让AI自主运行
+    # 使用bypass权限模式，让AI完全自主
     cmd = f"""
     lxc exec {CONTAINER_NAME} -- bash -c '
         cd {SANDBOX_DIR}
         echo "Starting autonomous AI session at $(date)" >> logs/session.log
-        claude code --prompt "{system_prompt}" >> logs/session.log 2>&1
+        claude code --permission-mode bypassPermissions --prompt "{system_prompt}" >> logs/session.log 2>&1
     '
     """
 

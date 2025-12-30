@@ -49,5 +49,5 @@ echo ""
 lxc exec "$CONTAINER_NAME" -- su - ai-agent -c "
     cd $SANDBOX_DIR
     echo '[$(date)] Starting AI session' >> logs/session.log
-    claude --prompt '$SYSTEM_PROMPT'
+    claude code --permission-mode bypassPermissions --prompt '$SYSTEM_PROMPT'
 "
