@@ -6,7 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-CONTAINER_NAME="ai-agent"
+CONTAINER_NAME="claude-sandbox"
 
 echo "========================================"
 echo "AI Agent Controller - Starting"
@@ -47,6 +47,25 @@ if ! lxc exec "$CONTAINER_NAME" -- command -v claude &> /dev/null; then
     echo "Please run install.sh to set up the container."
     lxc stop "$CONTAINER_NAME"
     exit 1
+fi
+
+# 检查API密钥是否配置
+echo "Checking API key configuration..."
+if ! lxc exec "$CONTAINER_NAME" -- su - ai-agent -c "cat /home/ai-agent/.claude.json" | grep -q '"apiKey"'; then
+    echo "Warning: API key not configured!"
+    echo ""
+    echo "To configure API key, run:"
+    echo "  lxc exec $CONTAINER_NAME -- su - ai-agent -c 'claude /login'"
+    echo ""
+    echo "Or see SETUP_API.md for instructions."
+    echo ""
+    read -p "Continue anyway? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborted. Please configure API key first."
+        lxc stop "$CONTAINER_NAME" 2>/dev/null || true
+        exit 1
+    fi
 fi
 
 # 准备系统提示词（注入当前时间和配额）

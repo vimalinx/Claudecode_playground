@@ -6,7 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-CONTAINER_NAME="ai-agent"
+CONTAINER_NAME="claude-sandbox"
 PID_FILE="$PROJECT_ROOT/watcher.pid"
 
 echo "========================================"

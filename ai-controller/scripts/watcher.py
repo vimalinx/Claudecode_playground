@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 # 配置
-CONTAINER_NAME = "ai-agent"
+CONTAINER_NAME = "claude-sandbox"
 SANDBOX_DIR = "/home/ai-agent/ai-sandbox"
 STOP_HOUR = 4  # 早上4点停止
 MIN_API_QUOTA = 1000  # 最低API配额保留
