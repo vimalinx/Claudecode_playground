@@ -4,8 +4,8 @@ ai-controller/watcher.pid
 ai-controller/last_session_summary.json
 ai-controller/config/system_prompt_runtime.txt
 
-# AI Sandbox (will be tracked in diary branch)
-ai-sandbox/
+# AI Sandbox (tracked in diary branch)
+# ai-sandbox/
 
 # Python
 __pycache__/
