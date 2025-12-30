@@ -1,0 +1,53 @@
+# LXC Container Configuration for AI Agent
+# This file defines the configuration for the ai-agent container
+
+# Container basic settings
+config:
+  # Container limits
+  limits.cpu: "2"
+  limits.memory: "2GB"
+  limits.memory.swap: "false"
+
+  # Network configuration
+  # Use bridge network for internet access
+  network:
+    - type: bridged
+      parent: lxcbr0
+      name: eth0
+      ipv4.address: auto
+
+  # Security settings
+  security.nesting: "true"       # Allow nesting (Docker inside LXC)
+  security.privileged: "false"   # Unprivileged container for security
+
+  # ID mapping (unprivileged)
+  raw.idmap: |
+    uid 1000000 1000000
+    gid 1000000 1000000
+
+# Storage configuration
+devices:
+  # Mount sandbox directory into container
+  ai-sandbox:
+    type: disk
+    source: /home/vimalinx/Claudecode_playground/ai-sandbox
+    path: /home/ai-agent/ai-sandbox
+    readonly: "false"
+
+  # Network interface
+  eth0:
+    nictype: bridged
+    parent: lxcbr0
+    type: nic
+
+# Container name and settings
+name: ai-agent
+description: "Autonomous AI Agent Sandbox"
+
+# OS image to use
+# Ubuntu 22.04 LTS
+source:
+  type: image
+  alias: ubuntu/22.04
+  protocol: simplestreams
+  server: https://cloud-images.ubuntu.com/releases
